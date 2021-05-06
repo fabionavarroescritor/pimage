@@ -1,0 +1,100 @@
+PImage img; //declara variáveis fotos
+PImage foto;
+float x = width/2;  //declara variáveis da imagem 2
+float y = height/2;
+float lado = 100; // decclara variável para formação do padrão truchet
+
+int state = 0;
+
+color [] c = {#9f6770, #da2f77, #b247cb, #bd4e91, #be5275, #c93ca0, #ab599e}; //declara variável de cor (mudar!!!)
+int indice = round(random(6));
+color w = color(255, 0, 0);
+
+void setup() {
+
+  size (900, 600); //canvas
+
+  img = loadImage("brick.jpg"); //carrega fotos
+  img.resize(200, 200);  //redefine tamanho
+}
+
+void draw() {
+
+  background(0);  //fundo
+
+  float numBlocosH = width/lado;  //calcula a quantidade de fotos da coluna horizontal
+  float numBlocosV = height/lado; //calcula a  qtidae de fotos na vertical
+
+  for (int i = 0; i < numBlocosH; i++) {   //formulação do quadrado horizontal
+    for (int j = 0; j < numBlocosV; j++) { //formulação do quadrado vertical
+
+      tint(c[indice]);                           //cria e colore a imagem
+      image(img, i*lado, j*lado, lado, lado);
+
+
+      if (state == 0) {
+        tint(c[indice]);                           //cria e colore a imagem
+        image(img, i*lado, j*lado, lado, lado);
+      }
+
+      if (state == 1) {
+        if (i*j%2 == 0 && i*j%2 == 0) { //configuração do posicionamento do triângulo
+          fill(w);           //preenchimento do triângulo
+          noStroke();
+          triangle(i*lado, j*lado, i*lado + lado, j*lado, i*lado + lado, j*lado + lado); //desenha o triângulo
+        }
+      }
+      if (state == 2) {
+        if (i%2 != 0 && j%2 == 0) {
+          fill(w);   
+          noStroke();
+          triangle(i*lado, j*lado, i*lado, j*lado + lado, i*lado + lado, j*lado + lado);
+        }
+      }
+      if (state == 3) {
+        if (i%2 == 0 && j%2 != 0) {
+          fill(w);   
+          noStroke();
+          triangle(i*lado + lado, j*lado, i*lado, j*lado, i*lado, j*lado + lado);
+        }
+      }
+      if (state == 4 ) {
+        if (i%2 != 0 && j%2 != 0) {
+          fill(w);   
+          noStroke();
+          triangle(i*lado + lado, j*lado, i*lado, j*lado, i*lado, j*lado + lado);
+        }
+      }
+      if (state ==5) {
+        if (i*j%2 == 0 && i*j%3 == 0) {
+          fill(w);   
+          noStroke();
+          triangle(i*lado + lado, j*lado, i*lado, j*lado, i*lado, j*lado + lado);
+        }
+      }
+    }
+  }
+}
+void keyPressed() {
+
+  switch(key) {
+  case'z':
+    state = 0;
+    break;
+  case'x':
+    state = 1;
+    break;
+  case'c':
+    state = 2;
+    break;
+  case'v':
+    state = 3;
+    break;
+    case'b':
+    state = 4;
+    break;
+  case'n':
+    state = 5;
+    break;
+  }
+}

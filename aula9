@@ -1,0 +1,68 @@
+PImage imag; //declara variavel imagem
+
+float px, py, tam, velx; // declara variáveis da foto
+
+color [] c = {#627a8b, #427ab0, #4a73cf, #7862e3, #bd32dc}; //declara variáveis de cor
+int indice = round(random(4));
+int indiceb = round(random(3));
+
+void setup() {
+
+  size(700, 700); 
+  background(0);
+
+  imag = loadImage ("lilybrik.jpg"); //inicializa parâmetros
+  imag.resize(699, 699);
+
+  px = 350;
+  py = 350; //inicializa variáveis da foto
+  tam = 699;
+  velx =0;
+}
+
+void draw() {
+
+  fill(0);
+  rectMode(CORNER);
+  rect(0, 0, width, height);
+
+  imageMode(CENTER); //carrega a imagem
+  image(imag, px, py, tam, tam);
+  tint(c[indice]);
+}
+
+void keyPressed() {
+
+  px = px + velx;
+
+  if (px > width + 350) {
+    px = 0;
+  }
+  if (px < 0) {
+    px = width + 350;
+  }
+
+  switch(key) {
+
+  case 'z':
+    velx = +3;
+    tint(c[indiceb]);
+    break;
+
+  case 'x':
+    velx = -3;
+    tint(c[indice]);
+    break;
+
+  case 'c':
+    tint (c[indiceb]);
+    image(imag, px, py, frameCount%tam, frameCount%tam);
+    break;
+
+  case 'b':
+    imag.resize(370, 370);
+    tint(c[indice]);
+    image(imag, random(width), random(height));
+    break;
+  }
+}
